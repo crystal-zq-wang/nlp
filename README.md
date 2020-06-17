@@ -1,2 +1,2 @@
-# vurbl
-Work in progress; creating a tagging system based on text files and their word frequencies
+# nlp
+Work in progress. Currently: playing around with word frequencies in my own original works.
