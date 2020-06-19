@@ -30,7 +30,7 @@ stopwords = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you',
 
 punctuation = [".", ",", ";", ":", "!", "?", '’', '“', '-', '”']
 
-corpus_root = "/Users/crystalwang/Desktop" # the location of the text for me
+corpus_root = # the location of the text for me
 robot = PlaintextCorpusReader(corpus_root, 'robo.txt') # important: the txt file shouldn't have any weird characters for formatting!
 														# possibly write a program to clean this up?
 
