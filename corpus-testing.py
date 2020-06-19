@@ -14,9 +14,23 @@ common = ["the", "be", "to", "of", "and", "a", "in", "that", "have", "I", "it", 
 			"two", "how", "our", "work", "first", "well", "way", "even", "new", "want", "because", "any", "these", 
 			"give", "day", "most", "us"]
 
-punctuation = [".", ",", ";", ":", "!", "?", '’', '“', '-']
+# stopwords from the nltk textbook
+stopwords = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours',
+				'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers',
+				'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves',
+				'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those', 'am', 'is', 'are',
+				'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does',
+				'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until',
+				'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into',
+				'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down',
+				'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here',
+				'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more',
+				'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so',
+				'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now']
 
-corpus_root = # the location of the text for me
+punctuation = [".", ",", ";", ":", "!", "?", '’', '“', '-', '”']
+
+corpus_root = "/Users/crystalwang/Desktop" # the location of the text for me
 robot = PlaintextCorpusReader(corpus_root, 'robo.txt') # important: the txt file shouldn't have any weird characters for formatting!
 														# possibly write a program to clean this up?
 
@@ -31,19 +45,22 @@ def find_informative(frequency_distribution, n):
 	for word in frequency_distribution:
 		if counter >= n:
 			break
-		if word not in common and word not in punctuation:
+		if word not in common and word not in punctuation and word not in stopwords:
 			counter += 1
 			informative[word] = frequency_distribution[word]
 	return informative
 
-# when I ran the program against a short story I wrote, this was the result:
-{'i': 133, 'was': 49, 's': 46, 'g': 36, 'had': 28, 't': 22, 'robot': 20, '.”': 19, '?”': 16, 'were': 15, 'before': 11, 'father': 11, 
-'d': 11, 'mother': 11, '”': 10, 'did': 9, 'sister': 9, 'liked': 9, 'robots': 8, 'thought': 8, 'wanted': 8, 'didn': 8, 'almost': 7, 
-'things': 7, '—': 7, 'got': 7, 'question': 7, 'felt': 7, ',”': 7, 'been': 6, 'ever': 6, 'really': 6, 'fell': 6, 'asked': 6, 'ask': 6, 
-'off': 6, 'operation': 6, 'consciousness': 6, 'are': 5, 'down': 5, 'too': 5, 'took': 5, 'around': 5, 'family': 5, 'response': 5, 'never': 5, 
-'home': 5, 'face': 5, 'room': 5, 'love': 5}
+# when I ran the program against a short story I wrote, this was the result for the 50 most common words:
+{'g': 36, 'robot': 20, '.”': 19, '?”': 16, 'father': 11, 'd': 11, 'mother': 11, 'sister': 9, 'liked': 9, 'robots': 8, 
+'thought': 8, 'wanted': 8, 'didn': 8, 'almost': 7, 'things': 7, '—': 7, 'got': 7, 'question': 7, 'felt': 7, ',”': 7, 'ever': 6, 
+'really': 6, 'fell': 6, 'asked': 6, 'ask': 6, 'operation': 6, 'consciousness': 6, 'took': 5, 'around': 5, 'family': 5, 
+'response': 5, 'never': 5, 'home': 5, 'face': 5, 'room': 5, 'love': 5, 'update': 4, 'industry': 4, 'knowledge': 4, 'years': 4, 
+'hand': 4, 'features': 4, 'options': 4, 'selection': 4, 'systems': 4, 'already': 4, 'many': 4, 'always': 4, 'change': 4, 'stop': 4}
+
+print(find_informative(freq_dist, 50))
 
 # main issue above: issues of catching punctuation/program splitting the words based on apostrophes as well--get rid of apostrophes first?
-# my short story was only about 3500 words, so not super great at seeing trends.
+# my short story was only about 3500 words, but the word frequencies are interesting
 # need better tokenizing capabilities--possibly overwrite the FreqDist function?
+# will add more filtering stopwords
 
